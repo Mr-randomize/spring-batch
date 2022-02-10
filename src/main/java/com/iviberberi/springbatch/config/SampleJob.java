@@ -41,7 +41,7 @@ public class SampleJob {
     @Autowired
     private FirstItemWriter firstItemWriter;
 
-    //    @Bean
+    @Bean
     public Job firstJob() {
         return jobBuilderFactory.get("First Job")
                 .incrementer(new RunIdIncrementer())
@@ -74,11 +74,12 @@ public class SampleJob {
         };
     }
 
-    @Bean // - Chunk oriented step
+    @Bean  //- Chunk oriented step
     public Job secondJob() {
         return jobBuilderFactory.get("Second Job")
                 .incrementer(new RunIdIncrementer())
                 .start(firstChunkStep())
+                .next(secondStep())
                 .build();
     }
 
